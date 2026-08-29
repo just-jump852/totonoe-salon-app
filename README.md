@@ -1,24 +1,31 @@
 # 整えサロン 予約アプリ
 
 会員登録不要の、整えサロン専用の予約アプリ（承認制）。
-仕様は [`../docs/要件書.md`](../docs/要件書.md)、UIの基準は [`../demo/totonoe-demo.html`](../demo/totonoe-demo.html)（改訂版デモ）。
+フレームワーク・ビルド不要。素のHTML/CSS/JavaScriptのみで構成しています。
 
-## 開発
+仕様は [`../docs/要件書.md`](../docs/要件書.md) を参照してください。
 
-```bash
-npm install
-npm run dev
-```
+## 動かし方
 
-## ビルド（スマホへのインストール用）
+`index.html` をブラウザで開くだけです。Node.js等のインストールは不要です。
 
-```bash
-npm run build
-npm run preview
-```
+- ローカルで試す：`index.html` をダブルクリック、またはブラウザにドラッグ＆ドロップ
+- 公開する：このリポジトリのGitHub Pagesで公開しています（下記）
 
-PWA対応のため、ビルド後のページをスマホのブラウザで開き「ホーム画面に追加」するとアプリのように使えます。
 データは端末のブラウザ内（localStorage）に保存され、他の端末とは共有されません。
+
+## GitHub Pages
+
+このリポジトリの `master` ブランチのルートから公開しています。
+
+**https://just-jump852.github.io/totonoe-salon-app/**
+
+`index.html` を更新して `master` に push すると、数分以内に反映されます。
+
+## PWA（ホーム画面に追加）
+
+`manifest.webmanifest` と `sw.js`（最小限のService Worker）により、スマートフォンのブラウザで
+上記URLを開き「ホーム画面に追加」すると、アプリのように使えます。
 
 ## 実装済みの機能
 
@@ -32,15 +39,10 @@ PWA対応のため、ビルド後のページをスマホのブラウザで開�
 ## サロン管理画面
 
 - URL の末尾に `#admin` を付ける（またはお問合せ画面下部の「サロン管理者の方はこちら」）。
-- パスコードは `src/TotonoeApp.jsx` の `ADMIN_PIN`（初期値 `0000`）。**運用前に必ず変更してください。**
+- パスコードは `index.html` 内の `ADMIN_PIN`（初期値 `0000`）。**運用前に必ず変更してください。**
 - 本番公開時はこの画面にログイン保護（Supabase Auth 等）を必ず設けます（要件書7章）。
-
-## アイコン
-
-`npm run gen:icons` で `public/icon-192.png` / `public/icon-512.png` を再生成します
-（Node標準のzlibのみ使用、外部依存なし）。
 
 ## 本番公開（未実装・今後）
 
 要件書7章：Vercel（ホスティング）+ Supabase（DB）+ Resend（通知メール／前日リマインド）+ GitHub。
-現状は localStorage のみのプロトタイプ。
+現状は GitHub Pages 上で動く、localStorage のみのプロトタイプ。
